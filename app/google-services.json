@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "310110541928",
+    "firebase_url": "https://avalon-courtyard-flats.firebaseio.com",
+    "project_id": "avalon-courtyard-flats",
+    "storage_bucket": "avalon-courtyard-flats.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310110541928:android:87bf86f4bf36d193",
+        "android_client_info": {
+          "package_name": "com.app.avalon.courtyard.flats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310110541928-ekbvbedoil5ui0fppq84jp6t0f88amps.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIlS3n8jiyX71i1SjdLu7vAK7MyT1eKNc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
