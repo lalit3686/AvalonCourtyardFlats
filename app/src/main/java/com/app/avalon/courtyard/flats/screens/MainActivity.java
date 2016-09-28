@@ -178,6 +178,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void showCallDialog(String ownerName, final String cellNo){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Do you wish to call "+ownerName+"?");
         builder.setPositiveButton("Call", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -42,6 +42,7 @@ public class OwnerInfoAdapter extends RecyclerView.Adapter<OwnerInfoAdapter.Owne
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mCustomOnItemClickListener.onItemClick(v, ownerInfoViewHolder.getAdapterPosition(), filteredData.get(ownerInfoViewHolder.getAdapterPosition()));
             }
         });
 
