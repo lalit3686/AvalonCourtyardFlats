@@ -55,14 +55,13 @@ public class OwnerInfoAdapter extends RecyclerView.Adapter<OwnerInfoAdapter.Owne
         Log.e(OwnerInfoAdapter.class.getSimpleName(), "onBindViewHolder - " + position);
 
         StringBuilder builder = new StringBuilder();
-        builder.append("\nName : ").append(showInfo(filteredData.get(position).Name)).append("\nHouse No : ").append(showInfo(filteredData.get(position).Block)+"-"+filteredData.get(position).BlockNumber)
+        builder.append("\nSerial No : "+filteredData.get(position).Sr+"\nName : ").append(showInfo(filteredData.get(position).Name)).append("\nHouse No : ").append(showInfo(filteredData.get(position).Block)+"-"+filteredData.get(position).BlockNumber)
                 .append("\nMobile No.1 : ").append(showInfo(filteredData.get(position).CellOne)).append("\nMobile No.2 : ").append(showInfo(filteredData.get(position).CellTwo)).append("\nTwo Wheeler 1 : ")
                 .append(showInfo(filteredData.get(position).TwoWheelerOne)).append("\nTwo Wheeler 2 : ").append(showInfo(filteredData.get(position).TwoWheelerTwo))
                 .append("\nFour Wheeler 1 : ").append(showInfo(filteredData.get(position).FourWheelerOne)).append("\nFour Wheeler 2 : ")
                 .append(showInfo(filteredData.get(position).FourWheelerTwo)).append("\n");
 
         ownerInfoViewHolder.textViewInfo.setText(builder.toString());
-        ownerInfoViewHolder.textViewSerialNo.setText(filteredData.get(position).Sr);
     }
 
     private String showInfo(String info) {
@@ -88,13 +87,12 @@ public class OwnerInfoAdapter extends RecyclerView.Adapter<OwnerInfoAdapter.Owne
 
     public static class OwnerInfoViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textViewInfo, textViewSerialNo;
+        public TextView textViewInfo;
 
         public OwnerInfoViewHolder(View view) {
             super(view);
 
             textViewInfo = (TextView) view.findViewById(R.id.textViewInfo);
-            textViewSerialNo = (TextView) view.findViewById(R.id.textViewSerialNo);
         }
     }
 

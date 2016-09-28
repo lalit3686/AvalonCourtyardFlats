@@ -53,6 +53,8 @@ public class Utils {
     }
 
     public static void getBlockInfo() {
+        //Query query = getFirebaseDatabaseReference().orderByChild("Block");
+        //query.addChildEventListener(new ChildEventListener() {
         getFirebaseDatabaseReference().addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
