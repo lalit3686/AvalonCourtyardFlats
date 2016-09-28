@@ -1,10 +1,14 @@
 package com.app.avalon.courtyard.flats.screens;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -159,7 +163,36 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onItemClick(View v, int position, Object item) {
-        //showToast(String.valueOf(item));
+        OwnerDetails details = (OwnerDetails) item;
+
+        if(details.CellOne != null){
+            showCallDialog(details.Name, details.CellOne);
+        }
+        else if(details.CellTwo != null){
+            showCallDialog(details.Name, details.CellOne);
+        }
+        else{
+            Snackbar.make(v, "Sorry, can't call!", Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    private void showCallDialog(String ownerName, final String cellNo){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setPositiveButton("Call", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + cellNo));
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setCancelable(true);
+        builder.create().show();
     }
 
     @Override
