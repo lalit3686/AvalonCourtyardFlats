@@ -22,6 +22,7 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
+        android:visibility="gone"
         app:layout_anchor="@id/listViewInfo"
         app:layout_anchorGravity="bottom|right|end" />
 
@@ -37,9 +38,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/darker_gray"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/colorAccent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleTextColor="@android:color/white">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
                 android:layout_width="match_parent"

@@ -22,7 +22,7 @@ import com.app.avalon.courtyard.flats.adapter.OwnerInfoAdapter;
 import com.app.avalon.courtyard.flats.application.MyApplication;
 import com.app.avalon.courtyard.flats.beans.OwnerDetails;
 import com.app.avalon.courtyard.flats.commons.AppConstants;
-import com.app.avalon.courtyard.flats.commons.Utils;
+import com.app.avalon.courtyard.flats.commons.FirebaseUtils;
 import com.app.avalon.courtyard.flats.listeners.CustomOnItemClickListener;
 import com.google.firebase.database.DataSnapshot;
 
@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         context = this;
 
-        Utils.getBlockInfo();
+        FirebaseUtils.getBlockInfo();
         initComponents();
         addListeners();
     }
@@ -100,6 +100,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void setUpToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     private void setUpRecyclerView(){
@@ -144,10 +146,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_support:
-                startActivity(new Intent(context, SupportActivity.class));
+                //startActivity(new Intent(context, SupportActivity.class));
                 break;
             case R.id.action_about_me:
                 startActivity(new Intent(context, AboutMeActivity.class));
+                break;
+            case android.R.id.home:
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

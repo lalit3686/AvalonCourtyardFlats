@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,7 +15,7 @@ import com.app.avalon.courtyard.flats.BuildConfig;
 import com.app.avalon.courtyard.flats.R;
 import com.app.avalon.courtyard.flats.application.MyApplication;
 import com.app.avalon.courtyard.flats.beans.AboutMeDetails;
-import com.app.avalon.courtyard.flats.commons.Utils;
+import com.app.avalon.courtyard.flats.commons.FirebaseUtils;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -34,9 +36,16 @@ public class AboutMeActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_me);
 
-        Utils.getAboutMeInfo();
+        FirebaseUtils.getAboutMeInfo();
         initComponents();
         addListeners();
+    }
+
+    private void setUpToolbar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_about_me);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
@@ -51,17 +60,17 @@ public class AboutMeActivity extends BaseActivity implements View.OnClickListene
         unRegisterEventBus();
     }
 
-    private void registerEventBus(){
+    private void registerEventBus() {
         MyApplication.getEventBusInstance().register(this);
     }
 
-    private void unRegisterEventBus(){
+    private void unRegisterEventBus() {
         MyApplication.getEventBusInstance().unregister(this);
     }
 
     @Subscribe
-    public void onEvent(AboutMeDetails aboutMeDetails){
-        if(aboutMeDetails != null){
+    public void onEvent(AboutMeDetails aboutMeDetails) {
+        if (aboutMeDetails != null) {
             this.aboutMeDetails = aboutMeDetails;
             updateViews();
             showUserProfilePicture();
@@ -70,6 +79,7 @@ public class AboutMeActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initComponents() {
+        setUpToolbar();
         fabEmail = (FloatingActionButton) findViewById(R.id.fabEmail);
         textViewAboutMeInfo = (TextView) findViewById(R.id.textViewAboutMeInfo);
         textViewName = (TextView) findViewById(R.id.textViewName);
@@ -79,7 +89,7 @@ public class AboutMeActivity extends BaseActivity implements View.OnClickListene
         imageViewProfilePic = (ImageView) findViewById(R.id.imageViewProfilePic);
     }
 
-    private void updateViews(){
+    private void updateViews() {
         textViewName.setText(aboutMeDetails.Name);
         textViewAddress.setText(aboutMeDetails.address);
         textViewEmail.setText(aboutMeDetails.mailTo);
@@ -93,21 +103,31 @@ public class AboutMeActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(View v) {
         Snackbar.make(v, "Click Send Button to Open Mail App", Snackbar.LENGTH_LONG).setAction("Send", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto", aboutMeDetails.mailTo, null));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback on Madhav App");
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback on " + getString(R.string.app_name) + " App");
                 emailIntent.putExtra(Intent.EXTRA_TEXT, "App Version : " + BuildConfig.VERSION_NAME);
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
             }
-        });
+        }).show();
     }
 
     private void showUserProfilePicture() {
         Glide.with(this).load(aboutMeDetails.profilePic != null ? aboutMeDetails.profilePic : "")
-                .crossFade().override(400, 400).placeholder(R.mipmap.ic_launcher).into(imageViewProfilePic);
+                .crossFade().override(800, 800).into(imageViewProfilePic);
     }
 }

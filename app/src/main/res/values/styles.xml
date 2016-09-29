@@ -1,13 +1,18 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <!-- change text color of toolbar title, overflow menu items -->
+        <!--<item name="android:textColorPrimary">@android:color/white</item>-->
+        <!-- back arrow, search icon, overflow menu color -->
+        <!--<item name="android:textColorSecondary">@android:color/white</item>-->
     </style>
 
 </resources>
