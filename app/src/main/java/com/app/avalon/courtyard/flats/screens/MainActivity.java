@@ -170,25 +170,50 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onItemClick(View v, int position, Object item) {
         OwnerDetails details = (OwnerDetails) item;
 
-        if(details.CellOne != null){
-            showCallDialog(details.Name, details.CellOne);
-        }
-        else if(details.CellTwo != null){
-            showCallDialog(details.Name, details.CellOne);
+        if(details.CellOne != null || details.CellTwo != null){
+            CharSequence[] items = new CharSequence[2];
+            if(details.CellOne != null){
+                items[0] = details.CellOne;
+            }
+            if(details.CellTwo != null){
+                items[1] = details.CellTwo;
+            }
+            showCallDialog(details.Name, items);
         }
         else{
             Snackbar.make(v, "Sorry, can't call!", Snackbar.LENGTH_LONG).show();
         }
     }
 
-    private void showCallDialog(String ownerName, final String cellNo){
+    private void callIntent(CharSequence cellNo){
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + cellNo));
+        startActivity(intent);
+    }
+
+    private void showCallDialog(String ownerName, final CharSequence[] items){
+        final CharSequence[] selectedCellNo = new CharSequence[1];
+        selectedCellNo[0] = items[0];
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("Do you wish to call "+ownerName+"?");
+        builder.setTitle("Do you wish to call "+ownerName+"?");
+        builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                switch (which){
+                    case 0:
+                        selectedCellNo[0] = items[which];
+                        break;
+                    case 1:
+                        selectedCellNo[0] = items[which];
+                        break;
+                }
+
+            }
+        });
         builder.setPositiveButton("Call", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + cellNo));
-                startActivity(intent);
+                callIntent(selectedCellNo[0]);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
