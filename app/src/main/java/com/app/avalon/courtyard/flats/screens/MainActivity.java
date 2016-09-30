@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +44,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private OwnerInfoAdapter ownerInfoAdapter;
     private FloatingActionButton fabAdd;
     private List<OwnerDetails> ownerDetailsList = new ArrayList<OwnerDetails>();
+    private List<String> callList = new ArrayList<String>();
     private Context context;
 
     @Override
@@ -105,15 +107,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void setUpRecyclerView(){
-        listViewInfo = (RecyclerView) findViewById(R.id.listViewInfo);
+        listViewInfo = (RecyclerView) findViewById(R.id.list_info);
         listViewInfo.setHasFixedSize(true);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        listViewInfo.setLayoutManager(mLinearLayoutManager);
+        LinearLayoutManager infoLinearLayoutManager = new LinearLayoutManager(this);
+        infoLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        listViewInfo.setLayoutManager(infoLinearLayoutManager);
     }
 
     private void setUpFloatingActionButton(){
-        fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
+        fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
     }
 
     @Override
@@ -126,10 +128,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void addListeners(){
         fabAdd.setOnClickListener(this);
-        setListAdapter();
+        setInfoListAdapter();
     }
 
-    private void setListAdapter(){
+    private void setInfoListAdapter(){
         ownerInfoAdapter = new OwnerInfoAdapter(ownerDetailsList, this);
         listViewInfo.setAdapter(ownerInfoAdapter);
     }
@@ -161,7 +163,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.fabAdd:
+            case R.id.fab_add:
                 break;
         }
     }
@@ -170,18 +172,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onItemClick(View v, int position, Object item) {
         OwnerDetails details = (OwnerDetails) item;
 
-        if(details.CellOne != null || details.CellTwo != null){
-            CharSequence[] items = new CharSequence[2];
-            if(details.CellOne != null){
-                items[0] = details.CellOne;
-            }
-            if(details.CellTwo != null){
-                items[1] = details.CellTwo;
-            }
-            showCallDialog(details.Name, items);
+        List<String> listItems = new ArrayList<>();
+        if(details.CellOne != null && !TextUtils.isEmpty(details.CellOne)){
+            listItems.add(details.CellOne);
+        }
+        if(details.CellTwo != null && !TextUtils.isEmpty(details.CellTwo)){
+            listItems.add(details.CellTwo);
+        }
+
+        if(listItems.size() > 0){
+            CharSequence[] items = new CharSequence[listItems.size()];
+            showCallDialog(details.Name, listItems.toArray(items));
         }
         else{
-            Snackbar.make(v, "Sorry, can't call!", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(v, "Sorry, "+details.Name+" deson't have any communication number!", Snackbar.LENGTH_LONG).show();
         }
     }
 

@@ -14,7 +14,7 @@
         android:background="@drawable/list_selector">
 
         <TextView
-            android:id="@+id/textViewInfo"
+            android:id="@+id/text_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"

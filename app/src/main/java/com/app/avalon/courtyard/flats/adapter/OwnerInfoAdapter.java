@@ -92,7 +92,7 @@ public class OwnerInfoAdapter extends RecyclerView.Adapter<OwnerInfoAdapter.Owne
         public OwnerInfoViewHolder(View view) {
             super(view);
 
-            textViewInfo = (TextView) view.findViewById(R.id.textViewInfo);
+            textViewInfo = (TextView) view.findViewById(R.id.text_info);
         }
     }
 
@@ -112,12 +112,15 @@ public class OwnerInfoAdapter extends RecyclerView.Adapter<OwnerInfoAdapter.Owne
                 results.count = originalData.size();
                 results.values = originalData;
             } else {
-                constraint = constraint.toString().toLowerCase();
+                constraint = constraint.toString().toLowerCase().replace("-","");
                 for (int i = 0; i < originalData.size(); i++) {
                     OwnerDetails data = originalData.get(i);
-                    if (data.Name.toLowerCase().contains(constraint.toString()) || data.Block.toLowerCase().contains(constraint.toString()) || data.BlockNumber.toLowerCase().contains(constraint.toString())
-                            || data.CellOne.toLowerCase().contains(constraint.toString()) || data.CellTwo.toLowerCase().contains(constraint.toString()) || data.TwoWheelerOne.toLowerCase().contains(constraint.toString())
-                            || data.TwoWheelerTwo.toLowerCase().contains(constraint.toString()) || data.FourWheelerOne.toLowerCase().contains(constraint.toString()) || data.FourWheelerTwo.toLowerCase().contains(constraint.toString())) {
+                    StringBuilder builder = new StringBuilder();
+                    builder.append(data.Block.toLowerCase()).append(data.BlockNumber.toLowerCase());
+                    if (data.Name.toLowerCase().contains(constraint.toString())
+                            || data.CellOne.toLowerCase().contains(constraint.toString()) || builder.toString().contains(constraint.toString()) || data.CellTwo.toLowerCase().contains(constraint.toString())
+                            || data.TwoWheelerOne.toLowerCase().contains(constraint.toString()) || data.TwoWheelerTwo.toLowerCase().contains(constraint.toString()) || data.FourWheelerOne.toLowerCase().contains(constraint.toString())
+                            || data.FourWheelerTwo.toLowerCase().contains(constraint.toString())) {
                         filteredList.add(data);
                     }
                 }
