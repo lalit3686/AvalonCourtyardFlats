@@ -112,15 +112,20 @@ public class OwnerInfoAdapter extends RecyclerView.Adapter<OwnerInfoAdapter.Owne
                 results.count = originalData.size();
                 results.values = originalData;
             } else {
-                constraint = constraint.toString().toLowerCase().replace("-","");
+                String regex = "-|\\s"; //replace space & -
+                constraint = constraint.toString().toLowerCase().replaceAll(regex,"");
                 for (int i = 0; i < originalData.size(); i++) {
                     OwnerDetails data = originalData.get(i);
                     StringBuilder builder = new StringBuilder();
                     builder.append(data.Block.toLowerCase()).append(data.BlockNumber.toLowerCase());
                     if (data.Name.toLowerCase().contains(constraint.toString())
-                            || data.CellOne.toLowerCase().contains(constraint.toString()) || builder.toString().contains(constraint.toString()) || data.CellTwo.toLowerCase().contains(constraint.toString())
-                            || data.TwoWheelerOne.toLowerCase().contains(constraint.toString()) || data.TwoWheelerTwo.toLowerCase().contains(constraint.toString()) || data.FourWheelerOne.toLowerCase().contains(constraint.toString())
-                            || data.FourWheelerTwo.toLowerCase().contains(constraint.toString())) {
+                            || data.CellOne.toLowerCase().contains(constraint.toString())
+                            || builder.toString().contains(constraint.toString())
+                            || data.CellTwo.toLowerCase().contains(constraint.toString())
+                            || data.TwoWheelerOne.toLowerCase().replaceAll(regex,"").contains(constraint.toString())
+                            || data.TwoWheelerTwo.toLowerCase().replaceAll(regex,"").contains(constraint.toString())
+                            || data.FourWheelerOne.toLowerCase().replaceAll(regex,"").contains(constraint.toString())
+                            || data.FourWheelerTwo.toLowerCase().replaceAll(regex,"").contains(constraint.toString())) {
                         filteredList.add(data);
                     }
                 }
